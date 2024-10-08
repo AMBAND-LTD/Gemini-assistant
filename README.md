@@ -1,32 +1,37 @@
-Gemini Assistant
-Gemini Assistant is a virtual assistant/chatbot that helps with navigation within the APHRC. It integrates multiple AI models to provide advanced conversational flows, leveraging Google's Gemini APIs for enhanced comprehension and generation.
+# Gemini Assistant
 
-Features
-Langchain Integration: Utilizes multiple AI models to enable advanced conversational flows.
-Google Gemini API: Integrates Gemini, Gemini Pro, and Gemini Pro Vision for improved conversational comprehension and generation capabilities.
-Ephemeral Conversation Storage: Uses Redis for efficient memory management and ensures data privacy.
-User-Friendly Interface: Streamlined API endpoints for easy integration and smooth navigation.
-Getting Started
-Prerequisites
-Google Gemini API:
+Gemini Assistant is a virtual assistant/chatbot that helps with navigation within the **APHRC**. It integrates multiple AI models to provide advanced conversational flows, leveraging Google's Gemini APIs for enhanced comprehension and generation.
 
-Obtain a Google Gemini AI API key from Google Gemini AI.
-Add the key to your project’s Secrets or environment variables with the key GOOGLE_API_KEY.
-Langchain-Gemini-API Requirements:
+## Features
 
-Python 3.9 or higher
-FastAPI
-Uvicorn
-Redis
-Access to the Google Gemini API
-Installation
-1. Install Redis
-For Linux:
+- **Langchain Integration**: Utilizes multiple AI models to enable advanced conversational flows.
+- **Google Gemini API**: Integrates Gemini, Gemini Pro, and Gemini Pro Vision for improved conversational comprehension and generation capabilities.
+- **Ephemeral Conversation Storage**: Uses Redis for efficient memory management and ensures data privacy.
+- **User-Friendly Interface**: Streamlined API endpoints for easy integration and smooth navigation.
 
-bash
-Copy code
-sudo apt update
-sudo apt install redis-server
+## Getting Started
+
+### Prerequisites
+
+1. **Google Gemini API**:
+   - Obtain a Google Gemini AI API key from [Google Gemini AI](https://cloud.google.com/gemini).
+   - Add the key to your project’s Secrets or environment variables with the key `GOOGLE_API_KEY`.
+
+2. **Langchain-Gemini-API Requirements**:
+   - Python 3.9 or higher
+   - FastAPI
+   - Uvicorn
+   - Redis
+   - Access to the Google Gemini API
+
+### Installation
+
+#### 1. Install Redis
+
+- **For Linux**:
+  ```bash
+  sudo apt update
+  sudo apt install redis-server
 For Windows: Download Redis from here.
 
 Test Redis Installation:
