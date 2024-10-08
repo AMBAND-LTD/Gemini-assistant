@@ -1,54 +1,87 @@
 Gemini Assistant
-Overview
-Gemini Assistant is a virtual assistant/chatbot that helps with navigation within aphrc
+Gemini Assistant is a virtual assistant/chatbot that helps with navigation within the APHRC. It integrates multiple AI models to provide advanced conversational flows, leveraging Google's Gemini APIs for enhanced comprehension and generation.
 
 Features
-Langchain Integration: Enabling advanced conversational flows by utilizing multiple AI models.
-Google Gemini API: Integrating Gemini, Gemini Pro, and Gemini Pro Vision for enhanced conversational comprehension and generation.
-Ephemeral Conversation Storage: Using Redis for efficient memory management and ensuring data privacy.
-User-Friendly Interface: Streamlined API endpoints designed for easy integration.
+Langchain Integration: Utilizes multiple AI models to enable advanced conversational flows.
+Google Gemini API: Integrates Gemini, Gemini Pro, and Gemini Pro Vision for improved conversational comprehension and generation capabilities.
+Ephemeral Conversation Storage: Uses Redis for efficient memory management and ensures data privacy.
+User-Friendly Interface: Streamlined API endpoints for easy integration and smooth navigation.
 Getting Started
-Prerequisites for Google Gemini API
-Get a Google Gemini AI API key here and add it to Secrets in your Repl with the key GOOGLE_API_KEY.
-Prerequisites for langchain-gemini-api
+Prerequisites
+Google Gemini API:
+
+Obtain a Google Gemini AI API key from Google Gemini AI.
+Add the key to your project’s Secrets or environment variables with the key GOOGLE_API_KEY.
+Langchain-Gemini-API Requirements:
+
 Python 3.9 or higher
 FastAPI
 Uvicorn
 Redis
-Access to Google Gemini API
+Access to the Google Gemini API
 Installation
-Install Redis
-Install Redis:
+1. Install Redis
+For Linux:
+
+bash
+Copy code
 sudo apt update
 sudo apt install redis-server
-Windows users can download Redis from here
-Test Redis:
-redis-cli ping
-If Redis is running, it will return PONG.
-Install Python Dependencies
-Clone the repository:
-https://github.com/KIMUTAICHELANGA/Gemini-assistant.git
-Create a virtual environment:
-python3 -m venv venv
-for Windows:
-python -m venv venv
-Activate the virtual environment:
- source venv/bin/activate
+For Windows: Download Redis from here.
 
+Test Redis Installation:
+
+bash
+Copy code
+redis-cli ping
+You should see a PONG response if Redis is running successfully.
+
+2. Clone the Repository
+bash
+Copy code
+git clone https://github.com/KIMUTAICHELANGA/Gemini-assistant.git
+cd Gemini-assistant
+3. Set Up a Virtual Environment
+For Linux/macOS:
+
+bash
+Copy code
+python3 -m venv venv
+source venv/bin/activate
+For Windows:
+
+bash
+Copy code
+python -m venv venv
+venv\Scripts\activate
+4. Install Python Dependencies
+bash
+Copy code
 poetry install
 Configuration
-Create a .env file in the project directory and add the following:
-GEMINI_API_KEY=<your_google_gemini_api_key> # e.g. "1234567890"
-REDIS_URL=redis://localhost:6379/0 # default Redis URL
-MY_API_KEY=<your_api_key_to_access_your_backend_api> . "1234567890"
-SYSTEM_INSTRUCTION=<your_system_instruction_for_gemini> # e.g. "give instructions on how to navigate the application...etc"
+Create a .env file in the project directory:
+
+bash
+Copy code
+touch .env
+Add the following configuration to the .env file:
+
+makefile
+Copy code
+GEMINI_API_KEY=<your_google_gemini_api_key>
+REDIS_URL=redis://localhost:6379/0  # Default Redis URL
+MY_API_KEY=<your_api_key_to_access_your_backend_api>
+SYSTEM_INSTRUCTION=<your_system_instruction_for_gemini>
 Running the API
-Start fastapi server:
+Start the FastAPI server:
+
+bash
+Copy code
 uvicorn app.main:app --reload
 The API will be available at http://localhost:8000.
 
 API Endpoints
-/conversations/: Endpoint for conversation
-
+/conversations/: Endpoint to handle conversation queries.
 API Documentation
-/docs: Swagger UI for API documentation.
+Access the Swagger UI for API documentation at:
+http://localhost:8000/docs
