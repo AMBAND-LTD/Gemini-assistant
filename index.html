@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Create Your Own Chatbot</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="stylesheet" href="/static/styles.css" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:400,700,300">
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/material-design-iconic-font/2.1.2/css/material-design-iconic-font.min.css">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Epilogue:wght@400&family=Finger+Paint&display=swap">
+    <style>
+        a {
+            color: inherit;
+            text-decoration: underline;
+            font-size: inherit;
+        }
+
+        a:hover {
+            opacity: 0.7;
+        }
+
+        /* Message section styles */
+        #message-section {
+            display: flex;
+            flex-direction: column;
+            height: 300px; /* Set a fixed height for scrolling */
+            overflow-y: auto;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9; /* Light background for better contrast */
+        }
+
+        .message {
+            margin: 5px 0;
+            max-width: 70%; /* Limit message width */
+            padding: 10px;
+            border-radius: 10px;
+            word-wrap: break-word; /* Ensure long messages wrap */
+        }
+
+        /* User message styles */
+        .user-message {
+            align-self: flex-end; /* Align user messages to the right */
+            background-color: #dcf8c6; /* Light green for user messages */
+        }
+
+        /* Bot message styles */
+        .bot-message {
+            align-self: flex-start; /* Align bot messages to the left */
+            background-color: #fff; /* White for bot messages */
+            border: 1px solid #ccc; /* Optional: border for bot messages */
+        }
+
+        /* Input section styles */
+        #input-section {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+
+        input[type="text"] {
+            flex: 1; /* Take up remaining space */
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-right: 10px;
+        }
+
+        .send {
+            background-color: #000; /* Blue color for send button */
+            color: white;
+            border: none;
+            border-radius: 5px;
+            padding: 10px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="botbody">
+        <div class="botcontent">
+            <div class="card">
+                <div id="botheader">
+                    <h1>Virtual Assistant</h1>
+                    <button class="send" onclick="reset()">
+                        <div class="circle refresh"><i class="zmdi zmdi-refresh-sync"
+                                style="font-size: 1.5rem; margin-left: 0.2rem;"></i></div>
+                    </button>
+                </div>
+                <hr>
+                <div id="message-section">
+                    <div class="message bot-message" id="bot"><span id="bot-response">Hello.. How may I assist you?..</span></div>
+                </div>
+                <div id="input-section">
+                    <input id="user-input" type="text" placeholder="Type a message..." autocomplete="on"
+                        autofocus="autofocus" tabindex="3" />
+                    <button type="submit" class="send sendmessage" onclick="sendMessage()" tabindex="3">
+                        <div class="circle"><i class="zmdi zmdi-mail-send"
+                                style="font-size: 1.5rem; margin-left: 0.2rem;"></i></div>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function reset() {
+            document.getElementById("message-section").innerHTML = '<div class="message bot-message"><span id="bot-response">Hello.. I\'m listening! Go on..</span></div>';
+        }
+
+        async function sendMessage() {
+            const userInput = document.getElementById("user-input").value;
+            if (!userInput) return;  // Prevent sending empty messages
+
+            // Show user message
+            const messageSection = document.getElementById("message-section");
+            messageSection.innerHTML += `<div class="message user-message"><strong>You:</strong> <span>${userInput}</span></div>`;
+            
+            // Send user input to the FastAPI backend
+            const response = await fetch("http://127.0.0.1:8000/api/v1/conversations/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ query: userInput }),
+            });
+
+            if (!response.ok) {
+                console.error("Failed to fetch response from server");
+                messageSection.innerHTML += `<div class="message bot-message"><strong>Bot:</strong> <span>There was an error. Please try again.</span></div>`;
+                return;
+            }
+
+            // Get the response as JSON
+            const data = await response.json();
+
+            // Append the bot's response to the message section
+            messageSection.innerHTML += `<div class="message bot-message"><strong>Bot:</strong> <span>${data.response}</span></div>`;
+            messageSection.scrollTop = messageSection.scrollHeight;  // Scroll to the bottom
+
+            // Clear the input field after sending the message
+            document.getElementById("user-input").value = "";
+        }
+    </script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+    
+</body>
+</html>
