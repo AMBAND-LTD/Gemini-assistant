@@ -121,7 +121,8 @@
             messageSection.innerHTML += `<div class="message user-message"><strong>You:</strong> <span>${userInput}</span></div>`;
             
             // Send user input to the FastAPI backend
-            const response = await fetch("http://127.0.0.1:8000/api/v1/conversations/", {
+            const response = await fetch("https://ideal-succotash-p5q6vvv7pw6hv6-8000.app.github.dev/api/v1/conversations/", {
+
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
